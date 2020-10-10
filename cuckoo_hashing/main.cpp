@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  cuckoo_hashing
+//  test_cuckoo
 //
 //  Created by Udit Jaitly on 04/10/20.
 //
@@ -87,6 +87,14 @@ void insert(int flow_value, int count, int r){
         }        
     }
 }
+//Calculate flows
+void countFlow(int hash_table[]){
+    for(int i=0;i<num_of_flows;i++){
+        if(hash_table[i]!=INT_MIN){
+            c++;
+        }
+    }
+}
 
 
 //Prints the hash-table
@@ -94,7 +102,6 @@ void print(int hash_table[]){
     for(int i=0;i<num_of_flows;i++){
         if(hash_table[i]!=INT_MIN){
             cout<<hash_table[i]<<" ";
-            c++;
         }
         else{
             cout<<0<<" ";
@@ -111,8 +118,9 @@ int main(int argc, const char * argv[])
         srand(i);
         insert(rand(),0,0);
     }
+    countFlow(hash_table);
+    cout<<"\nNumber of Flows In Table="<<c<<"\n";
     print(hash_table);
-    cout<<"\nNumber of Flows="<<c;
 
     return 0;
 }

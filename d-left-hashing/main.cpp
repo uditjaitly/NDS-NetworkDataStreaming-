@@ -52,13 +52,21 @@ void insert(int flow_value, int hash_table[]){
     }
     
 }
+//Calculate flows
+void countFlow(int hash_table[]){
+    for(int i=0;i<number_of_flows;i++){
+        if(hash_table[i]!=INT_MIN){
+            c++;
+        }
+    }
+}
+
 
 //Prints the hash-table
 void print(int hash_table[]){
     for(int i=0;i<MAXN;i++){
         if(hash_table[i]!=INT_MIN){
             cout<<hash_table[i]<<" ";
-            c++;
         }
         else{
             cout<<0<<" ";
@@ -73,7 +81,9 @@ int main(int argc, const char * argv[]) {
         srand(i);
         insert(rand(), hash_table);
     }
+    countFlow(hash_table);
+    cout<<"\nNumber of Flows In Table="<<c<<"\n";
     print(hash_table);
-    cout<<"\nNumber Of Flows="<<c;
+
     return 0;
 }
