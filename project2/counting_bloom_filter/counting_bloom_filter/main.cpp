@@ -44,7 +44,7 @@ void insert(vector<int> elements){
         for(int j=0;j<numHashes;j++){
            
             hashValues.push_back((randomNums[j]^elements[i])%MAXN);
-            if(bloomFilter[hashValues[j]]==0){
+            if(bloomFilter[hashValues[j]]>=0){
                 bloomFilter[hashValues[j]]= bloomFilter[hashValues[j]] +1;
             }
         }
