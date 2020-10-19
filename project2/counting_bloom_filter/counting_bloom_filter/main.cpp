@@ -114,7 +114,6 @@ vector<int> generateNums(int x, int elementsSize){
 
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
     initFilter();
     calcRandoms();
     elementsA=generateNums(1,1000);
@@ -123,8 +122,7 @@ int main(int argc, const char * argv[]) {
     elementsB=generateNums(2,500);
     insert(elementsB);
     query(elementsA);
-    cout<<"Number of 1's in Bloom"<<c<<"\n";
-    cout<<"Match count="<<matchCount;
+    cout<<"Number of 'A' Elements in Bloom Filter="<<matchCount;
     
     return 0;
 }

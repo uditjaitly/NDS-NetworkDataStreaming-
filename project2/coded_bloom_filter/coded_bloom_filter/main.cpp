@@ -102,18 +102,10 @@ void query(vector<int> set,int curr){
             matchCount++;
         }
     }
-    
-    
-    
-    
-    
-    
 }
 
 
 void generateSets(){
-    
-    
     for(int j=0;j<numOfSets;j++){
         vector<int> elements;
         set<int> trackElements;
@@ -136,16 +128,14 @@ int main(int argc, const char * argv[]) {
     //initAllBloomFilters();
     calcRandoms();
     generateSets();
-    
     for(int i = 0;i < numOfSets;i++){
         insert(sets[i],i);
     }
     for(int i = 0;i < numOfSets;i++){
         query(sets[i],i);
     }
-    
     int totalCorrectLookups=matchCount;
-    cout<<"Correct Lookups"<<totalCorrectLookups;
+    cout<<"Correct Lookups="<<totalCorrectLookups;
     
     return 0;
 }

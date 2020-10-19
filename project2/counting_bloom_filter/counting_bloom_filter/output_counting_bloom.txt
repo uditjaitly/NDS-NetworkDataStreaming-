@@ -1,0 +1,1 @@
+Number of 'A' Elements in Bloom Filter=506

@@ -1,0 +1,2 @@
+Lookup for A Elements=1000
+Lookup for B Elements=7

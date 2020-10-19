@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		DF2AF859253A7416000FF29C /* counting_bloom_filter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = counting_bloom_filter; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF2AF85C253A7416000FF29C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DF2AF879253E0581000FF29C /* output_counting_bloom.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = output_counting_bloom.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				DF2AF85C253A7416000FF29C /* main.cpp */,
+				DF2AF879253E0581000FF29C /* output_counting_bloom.txt */,
 			);
 			path = counting_bloom_filter;
 			sourceTree = "<group>";

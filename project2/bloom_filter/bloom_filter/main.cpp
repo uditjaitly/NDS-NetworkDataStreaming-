@@ -115,10 +115,12 @@ int main(int argc, const char * argv[]) {
     elementsA=generateNums(1);
     insert(elementsA);
     query(elementsA);
+    cout<<"Lookup for A Elements="<<matchCount<<"\n";
     elementsB=generateNums(2);
+    matchCount=0;
     query(elementsB);
-    cout<<"Number of 1's in Bloom"<<c<<"\n";
-    cout<<"Match count="<<matchCount;
+    //cout<<"Number of 1's in Bloom"<<c<<"\n";
+    cout<<"Lookup for B Elements="<<matchCount;
     
     return 0;
 }
