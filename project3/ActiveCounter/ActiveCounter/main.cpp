@@ -6,6 +6,7 @@
 //
 
 #include <iostream>
+#include <random>
 
 
 using namespace std;
@@ -90,11 +91,16 @@ int main(int argc, const char * argv[]) {
     for(int i=0;i<1000000;i++){
         
         probability=(1/pow(2,binaryToDecimal(expo)));
-        srand(i);
-        int randNum=rand() % 100 ;
-        if(randNum>=0 && randNum<(probability*100)){
-            num=addOne(binaryToDecimal(num));
+
+        
+        float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+        
+        if(r<probability){
+         
+                num=addOne(binaryToDecimal(num));
+   
         }
+        
         if(countDigit(num)>16){
             num=binaryToDecimal(num)>>1;
             num=decimalToBinary(num);
@@ -104,6 +110,5 @@ int main(int argc, const char * argv[]) {
     }
     cout<<num<<"\n";
     cout<<expo;
-    std::cout << "Hello, World!\n";
     return 0;
 }
