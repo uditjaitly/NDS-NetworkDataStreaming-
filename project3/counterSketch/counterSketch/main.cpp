@@ -1,14 +1,15 @@
 //
 //  main.cpp
-//  countmin
+//  counterSketch
 //
-//  Created by Udit Jaitly on 22/10/20.
+//  Created by Udit Jaitly on 23/10/20.
 //
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <math.h>
 using namespace std;
 #define MAXN 3000;
 vector<string> ipAddresses;
@@ -17,29 +18,36 @@ vector<long> ipToNumbers;
 vector<int> randomNums;
 vector<vector<int>> counters(3,vector<int>(3000,0));
 vector<float> errors;
+
+
+
 float total;
 int hashNums=3;
 float totalError=0;
 float avgError;
+bool neg;
+
 void generateRandoms(){
     for(int i =0; i<hashNums;i++){
-        randomNums.push_back(rand());
+        srand(i);
+        randomNums.push_back( rand() % 65537 + (-32768));
     }
 }
 
 void estimate(){
     for(int i=0;i<ipAddresses.size();i++){
         vector<int> hashVals;
-        float min=99999999;
         float error;
         for(int j=0;j<hashNums;j++){
-            int val= (ipToNumbers[i]^randomNums[j])%MAXN;
-            hashVals.push_back(val);
-            if(min>counters[j][val]){
-                min=counters[j][val];
+            int val= (abs(ipToNumbers[i])^abs(randomNums[j]))%MAXN;
+            hashVals.push_back(counters[j][val]);
+            if((ipToNumbers[i]^randomNums[j])>=0){
+                hashVals[j]=abs(hashVals[j]);
             }
         }
-        error=(min-size[i]);
+        sort(hashVals.begin(),hashVals.end());
+        
+        error=abs(hashVals[1]-size[i]);
         errors.push_back(error);
         totalError=totalError+error;
     }
@@ -49,9 +57,20 @@ void record(){
     for(int i=0;i<ipToNumbers.size();i++){
         vector<int> hashVals;
         for(int j=0;j<hashNums;j++){
-            int val= (ipToNumbers[i]^randomNums[j])%MAXN;
+            if((ipToNumbers[i]^randomNums[j])<0){
+                neg=true;
+            }
+            else{
+                neg=false;
+            }
+            int val= (abs(ipToNumbers[i])^abs(randomNums[j]))%MAXN;
             hashVals.push_back(val);
-            counters[j][val]=counters[j][val]+size[i];
+            if(neg==true ){
+                counters[j][val]=counters[j][val]+size[i];
+            }
+            else{
+                counters[j][val]=counters[j][val]-size[i];
+            }
         }
     }
 }
@@ -94,8 +113,12 @@ void convertAddresses(vector<string> ipAddresses){
             ipAddresses[i].erase(0, curr + 1);
         }
         tempNums.push_back(stoi(ipAddresses[i]));
-        unsigned int temp = 0;
+        int temp = 0;
         temp = ((tempNums[0]*255 + tempNums[1])*255 + tempNums[2])*255 + tempNums[3];
+        int x=rand();
+        if(x%2!=0){
+            temp=temp * (-1);
+        }
         cout<<temp<<"\n";
         //cout<<tempNums[3]<<"\n";
 
