@@ -13,6 +13,8 @@ using namespace std;
   
 long long int num=0;
 long long int expo=0;
+unsigned short int finNum;
+unsigned short int finExpo;
 float probability;
 int binaryToDecimal(long long int n)
 {
@@ -106,7 +108,11 @@ int main(int argc, const char * argv[]) {
         }
         
     }
-    cout<<num<<"\n";
-    cout<<expo;
+    finNum=binaryToDecimal(num);
+    finExpo=binaryToDecimal(expo);
+    long result=finNum*pow(2,finExpo);
+    cout<<result<<"\n";
+    //cout<<finNum<<"\n";
+    //cout<<finExpo;
     return 0;
 }

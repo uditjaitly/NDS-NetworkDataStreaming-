@@ -26,7 +26,17 @@ void generateRandoms(){
         randomNums.push_back(rand());
     }
 }
+struct ds{
+    string flowId;
+    int estSize;
+    int trueSize;
+};
+vector<ds> info;
 
+bool compareByEstSize(const ds &a, const ds &b)
+{
+    return a.estSize > b.estSize;
+}
 void estimate(){
     for(int i=0;i<ipAddresses.size();i++){
         vector<int> hashVals;
@@ -39,6 +49,10 @@ void estimate(){
                 min=counters[j][val];
             }
         }
+        info.push_back(ds());
+        info[i].estSize=min;
+        info[i].flowId=ipAddresses[i];
+        info[i].trueSize=size[i];
         error=(min-size[i]);
         errors.push_back(error);
         totalError=totalError+error;
@@ -96,7 +110,7 @@ void convertAddresses(vector<string> ipAddresses){
         tempNums.push_back(stoi(ipAddresses[i]));
         unsigned int temp = 0;
         temp = ((tempNums[0]*255 + tempNums[1])*255 + tempNums[2])*255 + tempNums[3];
-        cout<<temp<<"\n";
+        //cout<<temp<<"\n";
         //cout<<tempNums[3]<<"\n";
 
         ipToNumbers.push_back(temp);
@@ -111,7 +125,11 @@ int main(int argc, const char * argv[]) {
     record();
     estimate();
     avgError=totalError/10000;
-    cout<<avgError;
+    cout<<"Average Error="<<avgError<<"\n";
+    sort(info.begin(),info.end(),compareByEstSize);
+    for(int i=0;i<100;i++){
+        cout<<"FlowId="<<info[i].flowId<<" EstimatedSize="<<info[i].estSize<<" "<<"TrueSize="<<info[i].trueSize<<"\n";
+    }
     //cout<<ipAddresses[0];
     return 0;
 }

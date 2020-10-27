@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		DF2AF8AD25471C49000FF29C /* ActiveCounter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ActiveCounter; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF2AF8B025471C49000FF29C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DF2AF8BB2547B27B000FF29C /* Output_ActiveCounter.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Output_ActiveCounter.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				DF2AF8B025471C49000FF29C /* main.cpp */,
+				DF2AF8BB2547B27B000FF29C /* Output_ActiveCounter.txt */,
 			);
 			path = ActiveCounter;
 			sourceTree = "<group>";

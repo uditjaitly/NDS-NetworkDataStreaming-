@@ -21,6 +21,13 @@ vector<vector<int>> counters(3,vector<int>(3000,0));
 vector<float> errors;
 
 
+struct ds{
+    string flowId;
+    long estSize;
+    long trueSize;
+    
+};
+vector<ds> info;
 
 float total;
 int hashNums=3;
@@ -37,7 +44,7 @@ void generateRandoms(){
 
 void estimate(){
     for(int i=0;i<ipAddresses.size();i++){
-        vector<int> hashVals;
+        vector<long> hashVals;
         float error;
         for(int j=0;j<hashNums;j++){
             int val= (abs(ipToNumbers[i])^abs(randomNums[j]))%MAXN;
@@ -49,6 +56,10 @@ void estimate(){
             }
         }
         sort(hashVals.begin(),hashVals.end());
+        info.push_back(ds());
+        info[i].flowId=ipAddresses[i];
+        info[i].estSize=hashVals[1];
+        info[i].trueSize=size[i];
         
         error=abs(hashVals[1]-size[i]);
         errors.push_back(error);
@@ -56,25 +67,12 @@ void estimate(){
     }
 }
 
-
-long long int decimalToBinary(long long int N)
+bool compareByEstSize(const ds &a, const ds &b)
 {
-  
-    // To store the binary number
-    unsigned long long int binary = 0;
-    int cnt = 0;
-    while (N != 0) {
-        int rem = N % 2;
-        unsigned long long int c = pow(10, cnt);
-        binary += rem * c;
-        N /= 2;
-  
-        // Count used to store exponent value
-        cnt++;
-    }
-  
-    return binary;
+    return a.estSize > b.estSize;
 }
+
+
 
 void record(){
     for(int i=0;i<ipToNumbers.size();i++){
@@ -88,7 +86,7 @@ void record(){
             }
             long long int test=abs(ipToNumbers[i])^abs(randomNums[j]);
             string binary = std::bitset<32>(test).to_string();
-            cout<<"Binary="<<binary<<"\n";
+            //cout<<"Binary="<<binary<<"\n";
             int val= (abs(ipToNumbers[i])^abs(randomNums[j]))%MAXN;
             hashVals.push_back(val);
             if(binary[1]=='1' ){
@@ -142,7 +140,7 @@ void convertAddresses(vector<string> ipAddresses){
         tempNums.push_back(stoi(ipAddresses[i]));
         int temp = 0;
         temp = ((tempNums[0]*255 + tempNums[1])*255 + tempNums[2])*255 + tempNums[3]+10000000000;
-        cout<<temp<<"\n";
+        //cout<<temp<<"\n";
         //cout<<tempNums[3]<<"\n";
 
         ipToNumbers.push_back(temp);
@@ -157,7 +155,12 @@ int main(int argc, const char * argv[]) {
     record();
     estimate();
     avgError=totalError/10000;
-    cout<<avgError;
+    
+    cout<<"Average Error="<<avgError<<"\n";
+    sort(info.begin(), info.end(), compareByEstSize);
+    for(int i=0;i<100;i++){
+        cout<<"FlowId="<<info[i].flowId<<" EstimatedSize="<<info[i].estSize<<" "<<"TrueSize="<<info[i].trueSize<<"\n";
+    }
     //cout<<ipAddresses[0];
     return 0;
 }
