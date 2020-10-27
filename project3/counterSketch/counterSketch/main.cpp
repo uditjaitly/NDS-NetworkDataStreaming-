@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <bitset>
 #include <math.h>
 using namespace std;
 #define MAXN 3000;
@@ -29,8 +30,8 @@ bool neg;
 
 void generateRandoms(){
     for(int i =0; i<hashNums;i++){
-        srand(i);
-        randomNums.push_back( rand() % 65537 + (-32768));
+ 
+        randomNums.push_back(rand());
     }
 }
 
@@ -41,7 +42,9 @@ void estimate(){
         for(int j=0;j<hashNums;j++){
             int val= (abs(ipToNumbers[i])^abs(randomNums[j]))%MAXN;
             hashVals.push_back(counters[j][val]);
-            if((ipToNumbers[i]^randomNums[j])>=0){
+            long long int test=abs(ipToNumbers[i])^abs(randomNums[j]);
+            string binary = std::bitset<32>(test).to_string();
+            if(binary[1]=='0'){
                 hashVals[j]=abs(hashVals[j]);
             }
         }
@@ -51,6 +54,26 @@ void estimate(){
         errors.push_back(error);
         totalError=totalError+error;
     }
+}
+
+
+long long int decimalToBinary(long long int N)
+{
+  
+    // To store the binary number
+    unsigned long long int binary = 0;
+    int cnt = 0;
+    while (N != 0) {
+        int rem = N % 2;
+        unsigned long long int c = pow(10, cnt);
+        binary += rem * c;
+        N /= 2;
+  
+        // Count used to store exponent value
+        cnt++;
+    }
+  
+    return binary;
 }
 
 void record(){
@@ -63,10 +86,14 @@ void record(){
             else{
                 neg=false;
             }
+            long long int test=abs(ipToNumbers[i])^abs(randomNums[j]);
+            string binary = std::bitset<32>(test).to_string();
+            cout<<"Binary="<<binary<<"\n";
             int val= (abs(ipToNumbers[i])^abs(randomNums[j]))%MAXN;
             hashVals.push_back(val);
-            if(neg==true ){
+            if(binary[1]=='1' ){
                 counters[j][val]=counters[j][val]+size[i];
+                
             }
             else{
                 counters[j][val]=counters[j][val]-size[i];
@@ -114,11 +141,7 @@ void convertAddresses(vector<string> ipAddresses){
         }
         tempNums.push_back(stoi(ipAddresses[i]));
         int temp = 0;
-        temp = ((tempNums[0]*255 + tempNums[1])*255 + tempNums[2])*255 + tempNums[3];
-        int x=rand();
-        if(x%2!=0){
-            temp=temp * (-1);
-        }
+        temp = ((tempNums[0]*255 + tempNums[1])*255 + tempNums[2])*255 + tempNums[3]+10000000000;
         cout<<temp<<"\n";
         //cout<<tempNums[3]<<"\n";
 

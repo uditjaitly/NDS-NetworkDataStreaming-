@@ -21,7 +21,6 @@ int binaryToDecimal(long long int n)
  
     // Initializing base value to 1, i.e 2^0
     int base = 1;
- 
     long long int temp = num;
     while (temp) {
         int last_digit = temp % 10;
@@ -31,7 +30,6 @@ int binaryToDecimal(long long int n)
  
         base = base * 2;
     }
- 
     return dec_value;
 }
 
